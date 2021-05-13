@@ -83,14 +83,19 @@ public class FireDispatchImpl implements FireDispatch {
 
 
   @Override
-  public void dispatchFirefighers(CityNode... burningBuildings) throws NoFireFoundException {
+  public void dispatchFirefighers(CityNode... burningBuildings) {
     HashSet<CityNode> buildingSet = new HashSet<>();
     for(CityNode burningBuilding : burningBuildings) {
       buildingSet.add(burningBuilding);
     }
     fireFighterList = dispatch(buildingSet, fireFighterList);
-    for(CityNode burningBuilding : burningBuildings) {
-      city.getBuilding(burningBuilding).extinguishFire();
+    try {
+      for (CityNode burningBuilding : burningBuildings) {
+        city.getBuilding(burningBuilding).extinguishFire();
+      }
+    } catch (NoFireFoundException e) {
+      e.printStackTrace();
+      System.out.println("Tried to put out a fire that is not there.");
     }
 
   }
