@@ -23,5 +23,9 @@ public interface Firefighter {
    */
   void moveLocation(CityNode cityNode);
 
+  /**
+   * Creates a clone of this Firefighter
+   * @return clone of this Firefighter
+   */
   Firefighter clone();
 }
