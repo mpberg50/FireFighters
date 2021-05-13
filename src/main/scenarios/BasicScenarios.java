@@ -118,7 +118,7 @@ public class BasicScenarios {
     Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
   }
   @Test
-  public void doubleFirefighter4Fires() throws FireproofBuildingException {
+  public void doubleFirefighterFourFires() throws FireproofBuildingException {
     City basicCity = new CityImpl(3, 3, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
