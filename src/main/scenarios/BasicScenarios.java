@@ -2,6 +2,7 @@ package main.scenarios;
 
 import java.util.List;
 
+import main.api.exceptions.NoFireFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,7 +16,7 @@ import main.impls.CityImpl;
 
 public class BasicScenarios {
   @Test
-  public void singleFire() throws FireproofBuildingException {
+  public void singleFire() throws FireproofBuildingException, NoFireFoundException {
     City basicCity = new CityImpl(5, 5, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
@@ -28,7 +29,7 @@ public class BasicScenarios {
   }
 
   @Test
-  public void singleFireDistanceTraveledDiagonal() throws FireproofBuildingException {
+  public void singleFireDistanceTraveledDiagonal() throws FireproofBuildingException, NoFireFoundException {
     City basicCity = new CityImpl(2, 2, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
@@ -45,7 +46,7 @@ public class BasicScenarios {
   }
 
   @Test
-  public void singleFireDistanceTraveledAdjacent() throws FireproofBuildingException {
+  public void singleFireDistanceTraveledAdjacent() throws FireproofBuildingException, NoFireFoundException {
     City basicCity = new CityImpl(2, 2, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
@@ -62,7 +63,7 @@ public class BasicScenarios {
   }
 
   @Test
-  public void simpleDoubleFire() throws FireproofBuildingException {
+  public void simpleDoubleFire() throws FireproofBuildingException, NoFireFoundException {
     City basicCity = new CityImpl(2, 2, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
@@ -83,7 +84,7 @@ public class BasicScenarios {
   }
 
   @Test
-  public void doubleFirefighterDoubleFire() throws FireproofBuildingException {
+  public void doubleFirefighterDoubleFire() throws FireproofBuildingException, NoFireFoundException {
     City basicCity = new CityImpl(2, 2, new CityNode(0, 0));
     FireDispatch fireDispatch = basicCity.getFireDispatch();
 
@@ -114,6 +115,43 @@ public class BasicScenarios {
     Assert.assertEquals(2, totalDistanceTraveled);
     Assert.assertTrue(firefighterPresentAtFireOne);
     Assert.assertTrue(firefighterPresentAtFireTwo);
+    Assert.assertFalse(basicCity.getBuilding(fireNodes[0]).isBurning());
+    Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
+  }
+  @Test
+  public void doubleFirefighter4Fires() throws FireproofBuildingException, NoFireFoundException {
+    City basicCity = new CityImpl(3, 3, new CityNode(0, 0));
+    FireDispatch fireDispatch = basicCity.getFireDispatch();
+
+
+    CityNode[] fireNodes = {
+        new CityNode(0, 1),
+        new CityNode(1, 0),
+        new CityNode(0, 2),
+        new CityNode(2,0)};
+    Pyromaniac.setFires(basicCity, fireNodes);
+
+    fireDispatch.setFirefighters(2);
+    fireDispatch.dispatchFirefighers(fireNodes);
+
+    List<Firefighter> firefighters = fireDispatch.getFirefighters();
+    int totalDistanceTraveled = 0;
+    boolean firefighterPresentAtFireThree = false;
+    boolean firefighterPresentAtFireFour = false;
+    for (Firefighter firefighter : firefighters) {
+      totalDistanceTraveled += firefighter.distanceTraveled();
+
+      if (firefighter.getLocation().equals(fireNodes[2])) {
+        firefighterPresentAtFireThree = true;
+      }
+      if (firefighter.getLocation().equals(fireNodes[3])) {
+        firefighterPresentAtFireFour = true;
+      }
+    }
+
+    Assert.assertEquals(4, totalDistanceTraveled);
+    Assert.assertTrue(firefighterPresentAtFireThree);
+    Assert.assertTrue(firefighterPresentAtFireFour);
     Assert.assertFalse(basicCity.getBuilding(fireNodes[0]).isBurning());
     Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
   }

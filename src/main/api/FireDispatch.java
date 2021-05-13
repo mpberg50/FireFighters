@@ -1,6 +1,7 @@
 package main.api;
 
 import java.util.List;
+import main.api.exceptions.NoFireFoundException;
 
 public interface FireDispatch {
 
@@ -21,5 +22,5 @@ public interface FireDispatch {
    * firefighters and extinguish the fires. We want to optimize for total distance traveled by all firefighters
    * @param burningBuildings list of locations with burning buildings
    */
-  void dispatchFirefighers(CityNode... burningBuildings);
+  void dispatchFirefighers(CityNode... burningBuildings) throws NoFireFoundException;
 }

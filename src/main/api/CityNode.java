@@ -38,10 +38,19 @@ public class CityNode {
     return yCoordinate;
   }
 
+  public int getDistance(CityNode cityNode) {
+    return Math.abs(cityNode.getX() - getX()) + Math.abs(cityNode.getY() - getY());
+  }
+
+  public CityNode clone() {
+    return new CityNode(xCoordinate, yCoordinate);
+  }
+
   @Override
   public String toString() {
     return "CityNode{" + "xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + '}';
   }
+
 
   @Override
   public boolean equals(Object o) {
