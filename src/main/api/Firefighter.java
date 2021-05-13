@@ -16,4 +16,16 @@ public interface Firefighter {
    * @return the total distance traveled by this firefighter
    */
   int distanceTraveled();
+
+  /**
+   * Moves the firefighters location to a new location
+   * @param cityNode - The new location of this firefighter
+   */
+  void moveLocation(CityNode cityNode);
+
+  /**
+   * Creates a clone of this Firefighter
+   * @return clone of this Firefighter
+   */
+  Firefighter clone();
 }

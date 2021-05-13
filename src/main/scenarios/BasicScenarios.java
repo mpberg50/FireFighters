@@ -117,4 +117,41 @@ public class BasicScenarios {
     Assert.assertFalse(basicCity.getBuilding(fireNodes[0]).isBurning());
     Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
   }
+  @Test
+  public void doubleFirefighterFourFires() throws FireproofBuildingException {
+    City basicCity = new CityImpl(3, 3, new CityNode(0, 0));
+    FireDispatch fireDispatch = basicCity.getFireDispatch();
+
+
+    CityNode[] fireNodes = {
+        new CityNode(0, 1),
+        new CityNode(1, 0),
+        new CityNode(0, 2),
+        new CityNode(2,0)};
+    Pyromaniac.setFires(basicCity, fireNodes);
+
+    fireDispatch.setFirefighters(2);
+    fireDispatch.dispatchFirefighers(fireNodes);
+
+    List<Firefighter> firefighters = fireDispatch.getFirefighters();
+    int totalDistanceTraveled = 0;
+    boolean firefighterPresentAtFireThree = false;
+    boolean firefighterPresentAtFireFour = false;
+    for (Firefighter firefighter : firefighters) {
+      totalDistanceTraveled += firefighter.distanceTraveled();
+
+      if (firefighter.getLocation().equals(fireNodes[2])) {
+        firefighterPresentAtFireThree = true;
+      }
+      if (firefighter.getLocation().equals(fireNodes[3])) {
+        firefighterPresentAtFireFour = true;
+      }
+    }
+
+    Assert.assertEquals(4, totalDistanceTraveled);
+    Assert.assertTrue(firefighterPresentAtFireThree);
+    Assert.assertTrue(firefighterPresentAtFireFour);
+    Assert.assertFalse(basicCity.getBuilding(fireNodes[0]).isBurning());
+    Assert.assertFalse(basicCity.getBuilding(fireNodes[1]).isBurning());
+  }
 }
