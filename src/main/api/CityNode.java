@@ -50,7 +50,7 @@ public class CityNode {
   public String toString() {
     return "CityNode{" + "xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + '}';
   }
-  
+
   @Override
   public boolean equals(Object o) {
     if (this == o)

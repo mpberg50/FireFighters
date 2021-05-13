@@ -1,7 +1,6 @@
 package main.api;
 
 import java.util.List;
-import main.api.exceptions.NoFireFoundException;
 
 public interface FireDispatch {
 
